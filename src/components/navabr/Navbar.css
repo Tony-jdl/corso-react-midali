@@ -1,3 +1,23 @@
 ul li {
     color: rebeccapurple;
 }
+
+.immagine-arrotondata{
+    height: 300px;
+    border-radius: 100%;
+}
+
+.box{
+    height: 300px;
+    width: 300px;
+    background-color: yellowgreen;
+}
+
+.rounded{
+    border-radius: 30px;
+}
+
+.rotated{
+    rotate: 30deg;
+    background-color: blue;
+}
