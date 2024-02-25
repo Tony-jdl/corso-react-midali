@@ -2,7 +2,7 @@ import Link from "../link/Link";
 import "./Navbar.css"
 
 function Navbar() {
-    const x = 1;
+    const x = 11;
     const img = "/vite.svg";
     const img2 = "vite";
     const style = {
@@ -12,13 +12,7 @@ function Navbar() {
 
     return (
         <>
-            <div className={`box rounded ${x < 10 ? "rotated" : "" }`}> ciao </div> {/* metodo per rendere dinamico il css inline */}
-            <nav>{x > 1000 ? "sopra 1000" : "sotto 1000"}</nav> {/* le {} permettono di scrivere codice javascript al suo interno*/}
-            <a href="http://localhost:5174/"> <img style={style} src={img}/> style inline with object </a> {/* alternativa all'uso dello stile tramite oggetto javascript */}
-            <a href="http://localhost:5174/"> <img style={{ height: "200px" }} src={`/${img2}.svg`} /> style inline </a> {/* ATTENZIONE le {{}} sintassi che rappresenta un oggetto*/}
-            <a href="http://localhost:5174/"> <img className="immagine-arrotondata" src={img}/> className </a> {/* alternativa all'uso dello stile tramite className */}
-
-            
+            <div className={`bg-red-500 rouded-lg w-72 h-72 ${x < 10 ? "bg-red-500 rotate-45" : "bg-slate-700"}`}> ciao </div> {/* utilizzando il framework Tailwind CSS */}           
             <ul>
                 <li>
                     <a href="#">Ciao</a>
