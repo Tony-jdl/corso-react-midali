@@ -5,6 +5,19 @@ import './App.css'
 import Card from './components/Card'
 import DataCards from './data/data.json'
 
+function handleClick() {
+  alert("Ciao")
+}
+
+function handleChange(e) {
+  console.log(e.target.value);
+}
+
+function handleSubmit(e) {
+  e.preventDefautl();
+  console.log("Submitted");
+}
+
 function App() {
   const [count, setCount] = useState(0)
   /* const [visited, setVisited] = useState(false) */
@@ -18,6 +31,7 @@ function App() {
             .filter((city) => city.isVisited)
             .map((city) => (
               <Card
+              key={city.key}
               isVisited={city.isVisited}
               title={city.title} 
               imgUrl={city.imgUrl}
@@ -52,16 +66,12 @@ function App() {
         </div>
       </div>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button onClick={handleClick}>Alert</button>
+        <input type="text" onChange={handleChange}/>
+        <form onSubmit={handleSubmit} action="">
+          <button type='submit'>Submit</button>
+        </form>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
       {/* <div className="card">
         <button onClick={() => setVisited((visited) => visited ? visited=false : visited=true)}>
           show/hide not visited

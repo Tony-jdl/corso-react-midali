@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Card({title, imgUrl, description, isVisited, children}) {
+function Card({id, title, imgUrl, description, isVisited, children}) {
 
   return (
     <div className='rounded-md bg-slate-900'>
