@@ -3,38 +3,52 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Card from './components/Card'
+import DataCards from './data/data.json'
 
 function App() {
   const [count, setCount] = useState(0)
+  /* const [visited, setVisited] = useState(false) */
 
   return (
     <>
       <div>
         <div className='flex grid-cols gap-10'>
+          {
+            DataCards.cities
+            .filter((city) => city.isVisited)
+            .map((city) => (
+              <Card
+              isVisited={city.isVisited}
+              title={city.title} 
+              imgUrl={city.imgUrl}
+              description={city.description}
+              />
+            ))
+          }
+          {/* <Card 
+            isVisited={DataCards.cities[0].isVisited}
+            title={DataCards.cities[0].title} 
+            imgUrl={DataCards.cities[0].imgUrl}
+            description={DataCards.cities[0].description}
+          />
           <Card 
-          isVisited={true} 
-          title="Lago" 
-          imgUrl="https://images.unsplash.com/photo-1708876954270-8fad10609e53?q=80&w=2117&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, quod?
-            </Card>
+            isVisited={DataCards.cities[1].isVisited}
+            title={DataCards.cities[1].title} 
+            imgUrl={DataCards.cities[1].imgUrl}
+            description={DataCards.cities[1].description}
+          />
           <Card 
-          isVisited={false} 
-          title="Oceano" 
-          imgUrl="https://images.unsplash.com/photo-1695770169767-9bd2ca14a3c2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere dolores eum assumenda, id eius quo ipsam deleniti natus saepe ea!
-            </Card>
+            isVisited={DataCards.cities[2].isVisited}
+            title={DataCards.cities[2].title} 
+            imgUrl={DataCards.cities[2].imgUrl}
+            description={DataCards.cities[2].description}
+          />
           <Card 
-          isVisited={true} 
-          title="Persone" 
-          imgUrl="https://images.unsplash.com/photo-1697397380024-01fb8332cc82?q=80&w=2111&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium explicabo aliquid eaque nostrum quibusdam tempora!
-            </Card>
-          <Card 
-          isVisited={false} 
-          title="Spiaggia" 
-          imgUrl="https://plus.unsplash.com/premium_photo-1673002094359-6e2de18bf37b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima sint asperiores distinctio possimus temporibus cumque assumenda officiis ullam eaque doloribus sequi eos perferendis vel aspernatur, a magnam beatae, voluptas sapiente?
-            </Card>
+            isVisited={DataCards.cities[3].isVisited}
+            title={DataCards.cities[3].title} 
+            imgUrl={DataCards.cities[3].imgUrl}
+            description={DataCards.cities[3].description}
+          /> */}
         </div>
       </div>
       <div className="card">
@@ -48,6 +62,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      {/* <div className="card">
+        <button onClick={() => setVisited((visited) => visited ? visited=false : visited=true)}>
+          show/hide not visited
+        </button>
+      </div> */}
     </>
   )
 }
