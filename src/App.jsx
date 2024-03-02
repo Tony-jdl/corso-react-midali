@@ -20,7 +20,19 @@ function handleSubmit(e) {
 
 function App() {
   const [count, setCount] = useState(0)
-  /* const [visited, setVisited] = useState(false) */
+  const [items, setItems] = useState([1,2,3])
+  const [user, setUser] = useState({name: "Alice", age: 30})
+
+  const aggiungiItem = () => {
+    const nuovoItem = 4;
+    setItems([...items, nuovoItem]);
+    console.log(items);
+  }
+
+  const updateUser = () => {
+    const nuovoUser = {...user, name: "Bob", age: 26};
+    setUser(nuovoUser);
+  }
 
   return (
     <>
@@ -39,44 +51,17 @@ function App() {
               />
             ))
           }
-          {/* <Card 
-            isVisited={DataCards.cities[0].isVisited}
-            title={DataCards.cities[0].title} 
-            imgUrl={DataCards.cities[0].imgUrl}
-            description={DataCards.cities[0].description}
-          />
-          <Card 
-            isVisited={DataCards.cities[1].isVisited}
-            title={DataCards.cities[1].title} 
-            imgUrl={DataCards.cities[1].imgUrl}
-            description={DataCards.cities[1].description}
-          />
-          <Card 
-            isVisited={DataCards.cities[2].isVisited}
-            title={DataCards.cities[2].title} 
-            imgUrl={DataCards.cities[2].imgUrl}
-            description={DataCards.cities[2].description}
-          />
-          <Card 
-            isVisited={DataCards.cities[3].isVisited}
-            title={DataCards.cities[3].title} 
-            imgUrl={DataCards.cities[3].imgUrl}
-            description={DataCards.cities[3].description}
-          /> */}
         </div>
       </div>
       <div className="card">
+        <button onClick={() => setCount((count) => count++)}>Count is {count}</button>
+        <button onClick={aggiungiItem}>Items</button>
         <button onClick={handleClick}>Alert</button>
         <input type="text" onChange={handleChange}/>
         <form onSubmit={handleSubmit} action="">
           <button type='submit'>Submit</button>
         </form>
       </div>
-      {/* <div className="card">
-        <button onClick={() => setVisited((visited) => visited ? visited=false : visited=true)}>
-          show/hide not visited
-        </button>
-      </div> */}
     </>
   )
 }
