@@ -1,25 +1,82 @@
-import React from 'react'
+import React, { useState } from "react";
 
-function CardForm({addCity}) {
-  const handleClick = () => {
+function CardForm({ addCity }) {
+  const [formData, setFormData] = useState({
+    title: "",
+    imgUrl: "",
+    description: "",
+    isVisited: false,
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const newCity = {
-      key: 5,
-      isVisited: true,
-      title: "POrtogallo",
-      imgUrl: "https://images.unsplash.com/photo-1663340284228-ff9a2cdd3f02?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima sint asperiores distinctio possimus temporibus cumque assumenda officiis ullam eaque doloribus sequi eos perferendis vel aspernatur, a magnam beatae, voluptas sapiente?"
-    }
+      key: Math.random(),
+      isVisited: formData.isVisited,
+      title: formData.title,
+      imgUrl: formData.imgUrl,
+      description: formData.description,
+    };
     addCity(newCity);
-  }
+  };
+
+  const handleChangeInput = (e) => {
+    const { name, value, type, checked } = e.target;
+    const inputValue = type == "checkbox" ? checked : value;
+    setFormData({
+      ...formData,
+      [name]: inputValue,
+    });
+  };
 
   return (
-    <div className='flex flex-col gap-3 w-80 mb-10†'>
-        <input className='bg-gray-500' type="text" name="" id="" />
-        <input className='bg-gray-500' type="text" name="" id="" />
-        <input className='bg-gray-500' type="text" name="" id="" />
-        <button className='bg-gray-300' onClick={handleClick}>Aggiungi Card</button>
-    </div>
-  )
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 w-80 mb-10 bg-slate-900 rounded-md m-15 p-5 text-gray-200"
+    >
+      <div className="flex flex-col">
+        <label>Città</label>
+        <input
+          className="text-black"
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChangeInput}
+        />
+      </div>
+      <div className="flex flex-col">
+        <label>URL Immagine</label>
+        <input
+          className="text-black"
+          type="text"
+          name="imgUrl"
+          value={formData.imgUrl}
+          onChange={handleChangeInput}
+        />
+      </div>
+      <div className="flex flex-col">
+        <label>Descrizione</label>
+        <textarea
+          className="text-black"
+          name="description"
+          value={formData.description}
+          onChange={handleChangeInput}
+        />
+      </div>
+      <div>
+        <label>Visitata</label>
+        <input
+          type="checkbox"
+          name="isVisited"
+          checked={formData.isVisited}
+          onChange={handleChangeInput}
+        />
+      </div>
+      <div className="bg-gray-400 rounded-md">
+        <button type="submit">Aggiungi Card</button>
+      </div>
+    </form>
+  );
 }
 
-export default CardForm
+export default CardForm;
