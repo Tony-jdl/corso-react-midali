@@ -8,7 +8,7 @@ function Card({id, title, imgUrl, description, isVisited, children}) {
       <div className='flex flex-col p-4'>
         <h2 className='text-2xl text-white font-bold'>{title}</h2>
         <p className='text-gray-500'>{children}</p>
-        <p>{description}</p>
+        <p className='text-gray-300'>{description}</p>
         <span>{`${isVisited ? "✅ visitata" : "❌ non visitata"}`}</span>
       </div>
     </div>
