@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import Card from './components/Card'
-/* import DataCards from './data/data.json' */
 import CardForm from './components/CardForm'
+import Form from './components/Form'
+import UserList from './components/UserList'
 
 function handleClick() {
   alert("Ciao")
@@ -20,7 +21,7 @@ function handleSubmit(e) {
 function App() {
   const [count, setCount] = useState(0)
   const [items, setItems] = useState([1,2,3])
-  const [user, setUser] = useState({name: "Alice", age: 30})
+  const [users, setUsers] = useState([])
   const [cities, setCities] = useState([     
     {
       key: 1,
@@ -59,9 +60,8 @@ function App() {
     console.log(items);
   }
 
-  const updateUser = () => {
-    const nuovoUser = {...user, name: "Bob", age: 26};
-    setUser(nuovoUser);
+  const addUser = (newUser) => {
+    setUsers([...users, newUser]);
   }
 
   const addCity = (nuovaCity) => {
@@ -72,6 +72,20 @@ function App() {
 
   return (
     <>
+      <div className='container flex flex-row'>
+        <div>
+          <Form
+            addUser={addUser}
+          ></Form>
+        </div>
+        <div>
+          <UserList
+            users={users}
+          >
+          </UserList>
+        </div>
+      </div>
+      
       <div>
         <CardForm
           addCity={addCity}
