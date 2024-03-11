@@ -4,6 +4,7 @@ import Card from './components/Card'
 import CardForm from './components/CardForm'
 import Form from './components/Form'
 import UserList from './components/UserList'
+import Example from './components/Example'
 
 function handleClick() {
   alert("Ciao")
@@ -38,7 +39,7 @@ function App() {
       description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere dolores eum assumenda, id eius quo ipsam deleniti natus saepe ea!"
     },
     {
-      ke: 3,
+      key: 3,
       isVisited: true,
       title: "Persone",
       imgUrl: "https://images.unsplash.com/photo-1697397380024-01fb8332cc82?q=80&w=2111&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -85,6 +86,8 @@ function App() {
           </UserList>
         </div>
       </div>
+
+      <Example></Example>
       
       <div>
         <CardForm
