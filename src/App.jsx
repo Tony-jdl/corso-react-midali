@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Card from './components/Card'
 import CardForm from './components/CardForm'
@@ -53,6 +53,8 @@ function App() {
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima sint asperiores distinctio possimus temporibus cumque assumenda officiis ullam eaque doloribus sequi eos perferendis vel aspernatur, a magnam beatae, voluptas sapiente?"
     }
   ]);
+  const [datas, setDatas] = useState([]);
+  const del = null;
   
 
   const aggiungiItem = () => {
@@ -69,7 +71,38 @@ function App() {
     setCities([...cities, nuovaCity]);
   }
 
-  
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+    .then((response) => response.json())
+    .then((datas) => {
+      setDatas(datas);
+      console.log(datas);
+    })
+  }, [del]);
+
+  //DELETE
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'DELETE'
+    })
+    .then((response) => {
+      (response.status == 200) ? alert('Cancellazione eseguita con successo') : alert('Errore durante la cancellazione')
+    })
+    .catch(e => {
+      console.log(e);
+    })
+  }, []);
+
+  //POST
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users', {
+      method: 'POST',
+      body: JSON.stringify({}),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+    })
+  })
 
   return (
     <>
@@ -105,6 +138,17 @@ function App() {
               imgUrl={city.imgUrl}
               description={city.description}
               />
+            ))
+          }
+        </div>
+        <div className='grid grid-cols-4 gap-5'>
+          {
+            datas.map((data) => (
+              <div key={data.id} className='bg-slate-300 rounded-lg p-3'>
+                <p className='text-red-500 mb-1'>userID: {data.userId}</p>
+                <p className='text-xl text-black'>Title: {data.title}</p>
+                <p className='text-gray-800'>Body: {data.body}</p>
+              </div>
             ))
           }
         </div>
