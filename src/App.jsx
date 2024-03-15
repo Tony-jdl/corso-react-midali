@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import './App.css'
 import Card from './components/Card'
 import CardForm from './components/CardForm'
@@ -19,11 +19,22 @@ function handleSubmit(e) {
   console.log("Submitted");
 }
 
+function formReducer(state, action) {
+  switch(action.type){
+    case "CHANGE_FIELD":
+      return{...state, [action.field]: action.value}
+    case "RESET_FORM":
+      return {name: '', email:''}
+    default:
+      return state;
+  }
+}
+
 function App() {
   const [count, setCount] = useState(0)
-  const [items, setItems] = useState([1,2,3])
+  const [items, setItems] = useState([1, 2, 3])
   const [users, setUsers] = useState([])
-  const [cities, setCities] = useState([     
+  const [cities, setCities] = useState([
     {
       key: 1,
       isVisited: true,
@@ -55,7 +66,8 @@ function App() {
   ]);
   const [datas, setDatas] = useState([]);
   const del = null;
-  
+  const [formState, dispatchFormState] = useReducer(formReducer, {name:'', email:''});
+
 
   const aggiungiItem = () => {
     const nuovoItem = 4;
@@ -71,17 +83,31 @@ function App() {
     setCities([...cities, nuovaCity]);
   }
 
+  const handleFieldChange = (field, value) => {
+    dispatchFormState({type: "CHANGE_FIELD", field, value})
+  }
+
+  const resetForm = (e, field, value) => {
+    e.preventDefault();
+    dispatchFormState({type: "RESET_FORM", field, value})
+  }
+
+  const sendForm = () => {
+    /* dispatchFormState({type: "SEND_FIELD", field, value}) */
+    console.log(formState);
+  }
+
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/posts')
-    .then((response) => response.json())
-    .then((datas) => {
-      setDatas(datas);
-      console.log(datas);
-    })
-  }, [del]);
+      .then((response) => response.json())
+      .then((datas) => {
+        setDatas(datas);
+        console.log(datas);
+      })
+  }, [count]);
 
   //DELETE
-  useEffect(() => {
+  /* useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/posts', {
       method: 'DELETE'
     })
@@ -91,10 +117,10 @@ function App() {
     .catch(e => {
       console.log(e);
     })
-  }, []);
+  }, [del]); */
 
   //POST
-  useEffect(() => {
+  /* useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users', {
       method: 'POST',
       body: JSON.stringify({}),
@@ -102,7 +128,7 @@ function App() {
         "Content-type": "application/json; charset=UTF-8"
       },
     })
-  })
+  }) */
 
   return (
     <>
@@ -121,7 +147,8 @@ function App() {
       </div>
 
       <Example></Example>
-      
+
+      {/* Card Cities - inizio */}
       <div>
         <CardForm
           addCity={addCity}
@@ -129,18 +156,19 @@ function App() {
         <div className='grid grid-cols-4 gap-5'>
           {
             cities
-            /* .filter((city) => city.isVisited) */
-            .map((city) => (
-              <Card
-              key={city.key}
-              isVisited={city.isVisited}
-              title={city.title} 
-              imgUrl={city.imgUrl}
-              description={city.description}
-              />
-            ))
+              /* .filter((city) => city.isVisited) */
+              .map((city) => (
+                <Card
+                  key={city.key}
+                  isVisited={city.isVisited}
+                  title={city.title}
+                  imgUrl={city.imgUrl}
+                  description={city.description}
+                />
+              ))
           }
         </div>
+
         <div className='grid grid-cols-4 gap-5'>
           {
             datas.map((data) => (
@@ -153,17 +181,48 @@ function App() {
           }
         </div>
       </div>
+      {/* Card Cities - inizio */}
+
+      {/* Card - jsonTemplate - inizio */}
       <div className="card">
         <button onClick={() => setCount((count) => count++)}>Count is {count}</button>
         <button onClick={aggiungiItem}>Items</button>
         <button onClick={handleClick}>Alert</button>
-        <input type="text" onChange={handleChange}/>
+        <input type="text" onChange={handleChange} />
         <form onSubmit={handleSubmit} action="">
           <button type='submit'>Submit</button>
         </form>
       </div>
+      {/* Card - jsonTemplate - fine */}
+
+      {/* Form useEffect con resert */}
+      <form action="">
+        <div>
+          < label htmlFor="name">Nome: </label >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formState.name}
+            onChange={(e) => handleFieldChange("name", e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email: </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formState.email}
+            onChange={(e) => handleFieldChange("email", e.target.value)}
+          />
+        </div>
+        <button onClick={resetForm}>Resetta</button>
+        <button onClick={sendForm}>Invia</button>
+      </form>
+      {/* Form useEffect con resert */}
     </>
   )
 }
 
-export default App
+      export default App
