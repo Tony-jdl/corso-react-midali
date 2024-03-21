@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { ProvaContext } from '../stores/ProvaContext'
 
 const Example = () => {
-  const [count, setCount] = useState(0);
-
-  // useEffect()
-  useEffect(() => {
-    localStorage.setItem('Count', count.toString());
-    document.title = `Conteggio: ${count}` ;
-    console.log("sono useEffect()");
-  }, [count]);
-
-  /* const handleClick = () => {
-    setCount(count++);
-    document.title = 'Conteggio: ' + {count};
-  } */
+  const {count, setCount} = useContext(ProvaContext);
 
   return (
     <div>

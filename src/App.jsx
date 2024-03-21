@@ -1,10 +1,9 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useReducer, useState, useContext } from 'react'
 import './App.css'
 import Card from './components/Card'
 import CardForm from './components/CardForm'
-import Form from './components/Form'
-import UserList from './components/UserList'
 import Example from './components/Example'
+import { ProvaContext } from './stores/ProvaContext'
 
 function handleClick() {
   alert("Ciao")
@@ -32,8 +31,6 @@ function formReducer(state, action) {
 
 function App() {
   const [count, setCount] = useState(0)
-  const [items, setItems] = useState([1, 2, 3])
-  const [users, setUsers] = useState([])
   const [cities, setCities] = useState([
     {
       key: 1,
@@ -65,19 +62,8 @@ function App() {
     }
   ]);
   const [datas, setDatas] = useState([]);
-  const del = null;
   const [formState, dispatchFormState] = useReducer(formReducer, {name:'', email:''});
 
-
-  const aggiungiItem = () => {
-    const nuovoItem = 4;
-    setItems([...items, nuovoItem]);
-    console.log(items);
-  }
-
-  const addUser = (newUser) => {
-    setUsers([...users, newUser]);
-  }
 
   const addCity = (nuovaCity) => {
     setCities([...cities, nuovaCity]);
@@ -106,47 +92,36 @@ function App() {
       })
   }, [count]);
 
-  //DELETE
-  /* useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'DELETE'
-    })
-    .then((response) => {
-      (response.status == 200) ? alert('Cancellazione eseguita con successo') : alert('Errore durante la cancellazione')
-    })
-    .catch(e => {
-      console.log(e);
-    })
-  }, [del]); */
-
-  //POST
-  /* useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users', {
-      method: 'POST',
-      body: JSON.stringify({}),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      },
-    })
-  }) */
-
   return (
-    <>
+    <ProvaContext.Provider value={{ count, setCount }}>
       <div className='container flex flex-row'>
-        <div>
-          <Form
-            addUser={addUser}
-          ></Form>
-        </div>
-        <div>
-          <UserList
-            users={users}
-          >
-          </UserList>
-        </div>
+        {/* Form useEffect con resert */}
+        <form action="">
+          <div>
+            < label htmlFor="name">Nome: </label >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formState.name}
+              onChange={(e) => handleFieldChange("name", e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email: </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formState.email}
+              onChange={(e) => handleFieldChange("email", e.target.value)}
+            />
+          </div>
+          <button onClick={resetForm}>Resetta</button>
+          <button onClick={sendForm}>Invia</button>
+        </form>
+        {/* Form useEffect con resert */}
       </div>
-
-      <Example></Example>
 
       {/* Card Cities - inizio */}
       <div>
@@ -168,60 +143,11 @@ function App() {
               ))
           }
         </div>
-
-        <div className='grid grid-cols-4 gap-5'>
-          {
-            datas.map((data) => (
-              <div key={data.id} className='bg-slate-300 rounded-lg p-3'>
-                <p className='text-red-500 mb-1'>userID: {data.userId}</p>
-                <p className='text-xl text-black'>Title: {data.title}</p>
-                <p className='text-gray-800'>Body: {data.body}</p>
-              </div>
-            ))
-          }
-        </div>
       </div>
       {/* Card Cities - inizio */}
 
-      {/* Card - jsonTemplate - inizio */}
-      <div className="card">
-        <button onClick={() => setCount((count) => count++)}>Count is {count}</button>
-        <button onClick={aggiungiItem}>Items</button>
-        <button onClick={handleClick}>Alert</button>
-        <input type="text" onChange={handleChange} />
-        <form onSubmit={handleSubmit} action="">
-          <button type='submit'>Submit</button>
-        </form>
-      </div>
-      {/* Card - jsonTemplate - fine */}
-
-      {/* Form useEffect con resert */}
-      <form action="">
-        <div>
-          < label htmlFor="name">Nome: </label >
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formState.name}
-            onChange={(e) => handleFieldChange("name", e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formState.email}
-            onChange={(e) => handleFieldChange("email", e.target.value)}
-          />
-        </div>
-        <button onClick={resetForm}>Resetta</button>
-        <button onClick={sendForm}>Invia</button>
-      </form>
-      {/* Form useEffect con resert */}
-    </>
+      <Example></Example>   
+    </ProvaContext.Provider>
   )
 }
 
