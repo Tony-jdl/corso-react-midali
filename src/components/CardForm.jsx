@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { ProvaContext } from "../stores/ProvaContext";
+import { useDispatch } from "react-redux";
 
 function CardForm({ addCity }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: "",
     imgUrl: "",
@@ -18,7 +20,7 @@ function CardForm({ addCity }) {
       imgUrl: formData.imgUrl,
       description: formData.description,
     };
-    addCity(newCity);
+    dispatch(add(newCity));
   };
 
   const handleChangeInput = (e) => {
